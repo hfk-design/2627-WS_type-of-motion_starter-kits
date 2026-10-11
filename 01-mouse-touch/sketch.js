@@ -9,8 +9,10 @@
 
 const TEXT = "Type of Motion";
 
-// the font file (put other fonts into their own folder in shared/fonts/)
+// the font: a file (put other fonts into their own folder in shared/fonts/)
+// or the name of a web font loaded in index.html, e.g. Adobe Fonts (see README)
 const FONT_FILE = "../shared/fonts/TimesNewArial/TimesNewArialVariable.woff2";
+// const FONT_FILE = "scale-variable";  // Adobe Fonts, axes: wght 200 … 900, wdth 50 … 175
 
 // the axes of the font and what controls them
 // tag:   4-letter axis name (find them for any font on https://wakamaifondue.com)
@@ -20,8 +22,8 @@ const FONT_FILE = "../shared/fonts/TimesNewArial/TimesNewArialVariable.woff2";
 //        "y"  pointer top → bottom
 // add, remove or change lines to use other fonts and axes
 const AXES = [
-  { tag: "srff", min: 0,    max: 100, input: "x" },  // 0 = Arial, 100 = Times
-  { tag: "ital", min: -100, max: 100, input: "y" },  // -100 = slant left, 100 = slant right
+  { tag: "ital", min: -100, max: 100, input: "x" },  // -100 = slant left, 100 = slant right
+  { tag: "srff", min: 0,    max: 100, input: "y" },  // 0 = Arial, 100 = Times
 ];
 
 // how fast the type follows: 0.02 = slow and soft, 1 = instant
@@ -86,6 +88,12 @@ function updateAxes() {
 
 // loads a font file and uses it for an element
 function loadFont(file, element) {
+  // no file ending: it is the name of a web font loaded in index.html
+  if (!/\.(woff2?|ttf|otf)$/.test(file)) {
+    element.style.fontFamily = '"' + file + '"';
+    return;
+  }
+
   const font = new FontFace("Variable Font", "url(" + file + ")");
   font.load().then(() => {
     document.fonts.add(font);

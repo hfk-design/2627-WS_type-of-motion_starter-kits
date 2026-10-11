@@ -4,7 +4,7 @@ Six small examples of controlling a variable font with your body and devices.
 
 | Folder           | Input                | → srff (Arial / Times)  | → ital (slant left / right) |
 | ---------------- | -------------------- | ----------------------- | --------------------------- |
-| `01-mouse-touch` | mouse / finger       | move left / right       | move up / down              |
+| `01-mouse-touch` | mouse / finger       | move up / down          | move left / right           |
 | `02-gyroscope`   | phone tilt           | phone flat / upright    | tilt left / right           |
 | `03-body`        | camera, ml5 bodyPose | wrists together / apart | lean left / right           |
 | `04-face`        | camera, ml5 faceMesh | mouth closed / open     | tilt head left / right      |
@@ -25,6 +25,11 @@ It has these axes:
 | ------ | ---------- | ------------------------------------------------- |
 | `srff` | 0 … 100    | 0 = Arial, 100 = Times                            |
 | `ital` | -100 … 100 | -100 = slant left, 0 = upright, 100 = slant right |
+
+> **→ To do:** the font file is not included in this repository, because its
+> license does not allow sharing or public hosting. Upload your own font file to
+> `shared/fonts/` and change `FONT_FILE` in each `sketch.js`
+> (see [Using another variable font](#using-another-variable-font)).
 
 ## Using another variable font
 
@@ -53,6 +58,41 @@ const AXES = [
 Every input is a number from 0 to 1. The sketch turns it into
 `min … max` and writes it into `font-variation-settings`.
 Remember to also change the descriptions in `index.html`.
+
+### Web fonts (Adobe Fonts)
+
+Some fonts don't come as a file but as a web font link, for example
+[**Scale Variable**](https://fonts.adobe.com/fonts/scale-variable)
+by Mark Caneso (ps Type) on Adobe Fonts. It has these axes:
+
+| Axis   | Range     | Meaning               |
+| ------ | --------- | --------------------- |
+| `wght` | 200 … 900 | weight: light → black |
+| `wdth` | 50 … 175  | width: narrow → wide  |
+
+1. Add the link to the `<head>` of `index.html`, below the other stylesheet:
+
+   ```html
+   <link rel="stylesheet" href="https://use.typekit.net/ibo6egh.css" />
+   ```
+
+2. In `sketch.js`, set `FONT_FILE` to the font name instead of a file path:
+
+   ```js
+   const FONT_FILE = 'scale-variable';
+
+   const AXES = [
+     { tag: 'wght', min: 200, max: 900, input: 'x' },
+     { tag: 'wdth', min: 50, max: 175, input: 'y' },
+   ];
+   ```
+
+In `06-drift-type` there is no `AXES`: change `FONT_STYLE` instead,
+e.g. `'"wght" 900, "wdth" 50'`.
+
+If the font doesn't show up, check the web project on
+fonts.adobe.com → _Web Projects_: it must include the font,
+and if domains are listed there, add `localhost` and your web server.
 
 ## How every sketch is structured
 
@@ -165,10 +205,16 @@ Examples 01 and 02 use plain JavaScript, no libraries.
 
 ## Examples
 
-- [Times New Arial](https://timesnewarial.liebermannkiepereddemann.de/) — mouse / touch
-- [Mistaking Glass for Skin, Ralph Tharayil](https://andshymagazine.com/mistakingglassforskin/ralphtharayil/) — gyroscope
-- [Type of Motion](https://www.katharinanejdl.com/typeofmotion/) — variable font w/ pose recognition
-- [DriftDraw](https://katharinanejdl.com/driftdraw/) — draw with your head
+- **Typeface | Times New Arial** — mouse / touch\
+  ↳ <https://timesnewarial.liebermannkiepereddemann.de/>
+- **&amp;shy; | forever dolphin love II – *Hannah Schraven*** — mouse / touch\
+  ↳ <https://andshymagazine.com/mistakingglassforskin/hannahschraven/>
+- **&amp;shy; | man sprach von bränden – _Ralph Tharayil_** — gyroscope\
+  ↳ <https://andshymagazine.com/mistakingglassforskin/ralphtharayil/>
+- **Experimental | Type of Motion** — variable font w/ pose recognition\
+  ↳ <https://www.katharinanejdl.com/typeofmotion/>
+- **Experimental | DriftDraw** — draw with your head\
+  ↳ <https://katharinanejdl.com/driftdraw/>
 
 ## Resources
 

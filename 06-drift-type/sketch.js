@@ -11,8 +11,10 @@
 
 const TEXT = "Type of Motion ";  // written letter by letter, then repeats
 
-// the font file (put other fonts into their own folder in shared/fonts/)
+// the font: a file (put other fonts into their own folder in shared/fonts/)
+// or the name of a web font loaded in index.html, e.g. Adobe Fonts (see README)
 const FONT_FILE = "../shared/fonts/TimesNewArial/TimesNewArialVariable.woff2";
+// const FONT_FILE = "scale-variable";  // Adobe Fonts, axes: wght 200 … 900, wdth 50 … 175
 
 // one fixed style for all letters (axis values don't change here)
 // srff: 0 = Arial, 100 = Times / ital: -100 = slant left, 100 = slant right
@@ -165,6 +167,12 @@ window.addEventListener("dblclick", clearDrawing);
 
 // loads a font file and uses it for an element
 function loadFont(file, element) {
+  // no file ending: it is the name of a web font loaded in index.html
+  if (!/\.(woff2?|ttf|otf)$/.test(file)) {
+    element.style.fontFamily = '"' + file + '"';
+    return;
+  }
+
   const font = new FontFace("Variable Font", "url(" + file + ")");
   font.load().then(() => {
     document.fonts.add(font);
