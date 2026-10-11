@@ -1,5 +1,5 @@
 /* ==========================================================
-   04 — Face (ml5 faceMesh)
+   03 — Face (ml5 faceMesh)
    Move your face: mouth, head tilt and distance
    control the font axes.
 

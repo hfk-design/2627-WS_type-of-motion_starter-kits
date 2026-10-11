@@ -1,15 +1,14 @@
 # Variable Font Starter Kit
 
-Six small examples of controlling a variable font with your body and devices.
+Five small examples of controlling a variable font with your body and devices.
 
 | Folder           | Input                | → srff (Arial / Times)  | → ital (slant left / right) |
 | ---------------- | -------------------- | ----------------------- | --------------------------- |
 | `01-mouse-touch` | mouse / finger       | move up / down          | move left / right           |
-| `02-gyroscope`   | phone tilt           | phone flat / upright    | tilt left / right           |
-| `03-body`        | camera, ml5 bodyPose | wrists together / apart | lean left / right           |
-| `04-face`        | camera, ml5 faceMesh | mouth closed / open     | tilt head left / right      |
-| `05-hand`        | camera, ml5 handPose | fingers pinched / open  | hand left / right           |
-| `06-drift-type`  | camera, ml5 bodyPose | fixed: Times            | fixed: upright              |
+| `02-body`        | camera, ml5 bodyPose | wrists together / apart | lean left / right           |
+| `03-face`        | camera, ml5 faceMesh | mouth closed / open     | tilt head left / right      |
+| `04-hand`        | camera, ml5 handPose | fingers pinched / open  | hand left / right           |
+| `05-nose`        | camera, ml5 bodyPose | fixed: Times            | fixed: upright              |
 
 Every example is one folder with an `index.html` and a `sketch.js`.
 Start with one, copy the folder, and change it.
@@ -87,7 +86,7 @@ by Mark Caneso (ps Type) on Adobe Fonts. It has these axes:
    ];
    ```
 
-In `06-drift-type` there is no `AXES`: change `FONT_STYLE` instead,
+In `05-nose` there is no `AXES`: change `FONT_STYLE` instead,
 e.g. `'"wght" 900, "wdth" 50'`.
 
 If the font doesn't show up, check the web project on
@@ -156,52 +155,18 @@ In VS Code: install the extension _Live Server_,
 right-click `index.html` → _Open with Live Server_.
 It opens at <http://localhost:5500>.
 
-The browser will ask for camera access in examples 03–06.
+The browser will ask for camera access in examples 02–05.
 `localhost` counts as secure, so the camera works on your laptop.
-
-## Testing the gyroscope on a phone
-
-Phones only allow motion sensors on **HTTPS** pages
-(or on `localhost`). Opening `http://192.168.x.x:5500` from your phone
-will **not** work.
-
-**Upload to a web server with HTTPS**
-To use it on a phone, upload the folder to a web server with HTTPS
-(the address starts with `https://`) and open that address on your phone.
-Because of the font license, the page must not be public:
-use a password-protected folder.
-
-For quick testing without uploading:
-
-**Android + USB (no internet needed)**
-
-1. On the phone: enable _Developer options_ → _USB debugging_.
-2. Connect the phone with a cable, open `chrome://inspect` in Chrome on your laptop.
-3. Click _Port forwarding_, add `5500` → `localhost:5500`, enable it.
-4. On the phone, open `http://localhost:5500` in Chrome.
-
-**Any phone, temporary tunnel**
-A tunnel gives your local server a temporary HTTPS address:
-
-```
-npx localtunnel --port 5500
-```
-
-Open the printed `https://…` link on your phone.
-Stop the tunnel (Ctrl + C) when you're done: while it runs,
-the page (and the font) is reachable on the internet.
-
-**iPhone:** the page shows an _Allow motion_ button, tap it and confirm.
 
 ## Libraries
 
-- [p5.js](https://p5js.org) 1.11.1 — camera and drawing (examples 03–06)
-- [ml5.js](https://ml5js.org) 1.2.1 — pose recognition (examples 03–06)
+- [p5.js](https://p5js.org) 1.11.1 — camera and drawing (examples 02–05)
+- [ml5.js](https://ml5js.org) 1.2.1 — pose recognition (examples 02–05)
   - [bodyPose](https://docs.ml5js.org/#/reference/bodypose)
   - [faceMesh](https://docs.ml5js.org/#/reference/facemesh)
   - [handPose](https://docs.ml5js.org/#/reference/handpose)
 
-Examples 01 and 02 use plain JavaScript, no libraries.
+Example 01 uses plain JavaScript, no libraries.
 
 ## Examples
 
@@ -209,8 +174,6 @@ Examples 01 and 02 use plain JavaScript, no libraries.
   ↳ <https://timesnewarial.liebermannkiepereddemann.de/>
 - **&amp;shy; | forever dolphin love II – *Hannah Schraven*** — mouse / touch\
   ↳ <https://andshymagazine.com/mistakingglassforskin/hannahschraven/>
-- **&amp;shy; | man sprach von bränden – _Ralph Tharayil_** — gyroscope\
-  ↳ <https://andshymagazine.com/mistakingglassforskin/ralphtharayil/>
 - **Experimental | Type of Motion** — variable font w/ pose recognition\
   ↳ <https://www.katharinanejdl.com/typeofmotion/>
 - **Experimental | DriftDraw** — draw with your head\

@@ -1,9 +1,11 @@
 /* ==========================================================
-   02 — Gyroscope
-   Tilt the phone: its angle controls the font axes.
+   04 — Hand (ml5 handPose)
+   Move your hand: pinch and position control the font axes.
 
-   Only works on phones / tablets, and only over HTTPS.
-   See the README for how to test it.
+   ml5 finds 21 points on each hand, e.g.
+   wrist, thumb_tip, index_finger_tip, middle_finger_tip,
+   ring_finger_tip, pinky_finger_tip, index_finger_mcp (knuckle).
+   Docs: https://docs.ml5js.org/#/reference/handpose
    ========================================================== */
 
 
@@ -20,74 +22,101 @@ const FONT_FILE = "../shared/fonts/TimesNewArial/TimesNewArialVariable.woff2";
 // tag:   4-letter axis name (find them for any font on https://wakamaifondue.com)
 // min / max: the part of the axis you want to use (swap them to reverse)
 // input: what controls this axis, one of:
-//        "tiltSide"   tilted left → right
-//        "tiltFront"  phone lying flat → standing upright
+//        "pinch"  thumb and index finger pinched → open
+//        "x"      hand left → right
+//        "y"      hand down → up
 // add, remove or change lines to use other fonts and axes
 const AXES = [
-  { tag: "srff", min: 0,    max: 100, input: "tiltFront" },  // 0 = Arial, 100 = Times
-  { tag: "ital", min: -100, max: 100, input: "tiltSide" },   // -100 = slant left, 100 = slant right
+  { tag: "srff", min: 0,    max: 100, input: "pinch" },  // 0 = Arial, 100 = Times
+  { tag: "ital", min: -100, max: 100, input: "x" },      // -100 = slant left, 100 = slant right
 ];
 
 // how fast the type follows: 0.02 = slow and soft, 1 = instant
 const SMOOTHING = 0.1;
+
+// show the camera preview with the detected points
+const SHOW_VIDEO = true;
 
 
 /* ---------- SETUP ---------- */
 
 const type = document.getElementById("type");
 const readout = document.getElementById("readout");
-const hint = document.getElementById("hint");
-const startButton = document.getElementById("start");
 type.textContent = TEXT;
 loadFont(FONT_FILE, type);
 
 let inputs = {};   // every input as a number from 0 to 1
 let current = {};  // the current value of every axis
 
+let video;
+let handPose;
+let hands = [];  // ml5 fills this with every hand it finds
 
-/* ---------- PERMISSION ----------
-   iPhones ask for permission first, and only after a tap.
-   Other devices start right away. */
-
-if (typeof DeviceOrientationEvent !== "undefined" &&
-    typeof DeviceOrientationEvent.requestPermission === "function") {
-  startButton.hidden = false;
-  hint.hidden = true;
-  startButton.addEventListener("click", async () => {
-    const answer = await DeviceOrientationEvent.requestPermission();
-    if (answer === "granted") {
-      startButton.hidden = true;
-      startListening();
-    }
-  });
-} else {
-  startListening();
+// preload runs before setup: load the model
+function preload() {
+  handPose = ml5.handPose({ maxHands: 1, flipped: true });
 }
 
+function setup() {
+  createCanvas(640, 480);  // the preview, scaled down by CSS
+  video = createCapture(VIDEO, { flipped: true });  // flipped = mirror view
+  video.size(640, 480);
+  video.hide();
 
-/* ---------- INPUT: read the tilt, as numbers from 0 to 1 ---------- */
+  // start detecting, gotHands is called with the results
+  handPose.detectStart(video, gotHands);
 
-function startListening() {
-  window.addEventListener("deviceorientation", (event) => {
-    if (event.gamma === null) return;  // no sensor (e.g. a laptop)
-    hint.hidden = true;  // the sensor works, the hint is no longer needed
-
-    // gamma: -45° (tilted left) → 0, 45° (tilted right) → 1
-    inputs.tiltSide = mapRange(event.gamma, -45, 45, 0, 1);
-    // beta: 0° (lying flat) → 0, 90° (standing upright) → 1
-    inputs.tiltFront = mapRange(event.beta, 0, 90, 0, 1);
-  });
+  if (!SHOW_VIDEO) noCanvas();
 }
 
+function gotHands(results) {
+  hands = results;
+}
 
-/* ---------- OUTPUT: update the font every frame ---------- */
 
 function draw() {
-  type.style.fontVariationSettings = updateAxes();
-  requestAnimationFrame(draw);
-}
 
-draw();
+  /* ---------- INPUT: read the hand, as numbers from 0 to 1 ---------- */
+  // change the middle numbers to make it more / less sensitive
+
+  if (hands.length > 0) {
+    const hand = hands[0];  // the first hand
+    const thumb   = hand.thumb_tip;
+    const index   = hand.index_finger_tip;
+    const wrist   = hand.wrist;
+    const knuckle = hand.index_finger_mcp;
+
+    // size of the hand, so it works close to and far from the camera
+    const handSize = dist(wrist.x, wrist.y, knuckle.x, knuckle.y);
+
+    // pinch: gap between thumb and index finger, relative to the hand size
+    const gap = dist(thumb.x, thumb.y, index.x, index.y) / handSize;
+    inputs.pinch = map(gap, 0.1, 1.5, 0, 1, true);
+
+    // position: wrist at the left / bottom edge → 0, right / top edge → 1
+    inputs.x = map(wrist.x / video.width, 0.2, 0.8, 0, 1, true);
+    inputs.y = map(wrist.y / video.height, 0.9, 0.2, 0, 1, true);
+  }
+
+
+  /* ---------- OUTPUT: update the font ---------- */
+
+  type.style.fontVariationSettings = updateAxes();
+
+
+  /* ---------- PREVIEW: video + points ---------- */
+
+  if (SHOW_VIDEO) {
+    image(video, 0, 0, width, height);
+    noStroke();
+    fill(255);
+    for (const hand of hands) {
+      for (const point of hand.keypoints) {
+        circle(point.x, point.y, 12);
+      }
+    }
+  }
+}
 
 
 /* ---------- HELPERS (no need to change) ---------- */
@@ -115,14 +144,6 @@ function updateAxes() {
 
   readout.textContent = text;
   return settings.join(", ");
-}
-
-// converts a value from one range to another, and keeps it inside the new range
-// e.g. mapRange(45, 0, 90, 0, 1) → 0.5
-function mapRange(value, inMin, inMax, outMin, outMax) {
-  const t = (value - inMin) / (inMax - inMin);
-  const clamped = Math.min(Math.max(t, 0), 1);
-  return outMin + clamped * (outMax - outMin);
 }
 
 // loads a font file and uses it for an element

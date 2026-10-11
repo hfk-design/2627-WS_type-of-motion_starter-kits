@@ -3,8 +3,18 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>04 Face</title>
+    <title>05 Nose</title>
     <link rel="stylesheet" href="../shared/css/style.css">
+    <style>
+      /* page-specific: every placed letter */
+      .letter {
+        position: absolute;
+        font-size: 64px;   /* size of the letters */
+        line-height: 1;
+        white-space: pre;
+        user-select: none;
+      }
+    </style>
 
     <!-- p5.js (camera + drawing) and ml5.js (pose recognition) -->
     <script src="https://cdn.jsdelivr.net/npm/p5@1.11.1/lib/p5.min.js"></script>
@@ -12,15 +22,15 @@
   </head>
   <body>
 
-    <!-- the text that changes -->
-    <h1 class="type" id="type">Type of Motion</h1>
+    <!-- the letters are added in here -->
+    <div id="drawing"></div>
 
     <!-- labels -->
-    <p class="corner top-left"><a href="../index.html">Index</a> / 04 Face</p>
+    <p class="corner top-left"><a href="../index.html">Index</a> / 05 Nose</p>
     <p class="corner top-right readout" id="readout">loading model …</p>
     <p class="corner bottom-left">
-      Mouth closed / open → Arial / Times (srff)<br>
-      Tilt your head left / right → slant left / right (ital)<br><br>
+      Move your head to write.<br>
+      Space or double-click → clear<br><br>
       Font: <a href="https://timesnewarial.liebermannkiepereddemann.de/" target="_blank">Times New Arial</a>
     </p>
 

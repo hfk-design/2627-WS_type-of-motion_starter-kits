@@ -1,5 +1,5 @@
 /* ==========================================================
-   06 — Drift Type (ml5 bodyPose)
+   05 — Nose (ml5 bodyPose)
    Your nose is a pen that writes letters on the screen.
 
    Based on DriftDraw, which draws a line instead of letters.

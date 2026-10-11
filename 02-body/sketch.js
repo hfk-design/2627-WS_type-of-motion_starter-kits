@@ -1,5 +1,5 @@
 /* ==========================================================
-   03 — Body (ml5 bodyPose)
+   02 — Body (ml5 bodyPose)
    Move your arms and upper body to control the font axes.
 
    ml5 finds 17 points on the body:
