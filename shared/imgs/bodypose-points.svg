@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 480" width="520" height="480" font-family="Helvetica, Arial, sans-serif" font-size="12">
+  <!-- The 17 points ml5 bodyPose (MoveNet) finds, mirror view as in the sketches -->
+  <rect width="520" height="480" fill="#fff"/>
+
+  <!-- skeleton -->
+  <g stroke="#000" stroke-width="1.5" fill="none">
+    <line x1="210" y1="130" x2="310" y2="130"/>
+    <line x1="210" y1="130" x2="185" y2="200"/>
+    <line x1="185" y1="200" x2="170" y2="265"/>
+    <line x1="310" y1="130" x2="335" y2="200"/>
+    <line x1="335" y1="200" x2="350" y2="265"/>
+    <line x1="210" y1="130" x2="228" y2="260"/>
+    <line x1="310" y1="130" x2="292" y2="260"/>
+    <line x1="228" y1="260" x2="292" y2="260"/>
+    <line x1="228" y1="260" x2="222" y2="350"/>
+    <line x1="222" y1="350" x2="218" y2="440"/>
+    <line x1="292" y1="260" x2="298" y2="350"/>
+    <line x1="298" y1="350" x2="302" y2="440"/>
+  </g>
+
+  <!-- points -->
+  <g fill="#000">
+    <circle cx="260" cy="72" r="5"/>
+    <circle cx="246" cy="58" r="5"/>
+    <circle cx="274" cy="58" r="5"/>
+    <circle cx="232" cy="66" r="5"/>
+    <circle cx="288" cy="66" r="5"/>
+    <circle cx="210" cy="130" r="5"/>
+    <circle cx="310" cy="130" r="5"/>
+    <circle cx="185" cy="200" r="5"/>
+    <circle cx="335" cy="200" r="5"/>
+    <circle cx="170" cy="265" r="5"/>
+    <circle cx="350" cy="265" r="5"/>
+    <circle cx="228" cy="260" r="5"/>
+    <circle cx="292" cy="260" r="5"/>
+    <circle cx="222" cy="350" r="5"/>
+    <circle cx="298" cy="350" r="5"/>
+    <circle cx="218" cy="440" r="5"/>
+    <circle cx="302" cy="440" r="5"/>
+  </g>
+
+  <!-- labels: your left side is on the left (mirror view) -->
+  <g fill="#000">
+    <text x="260" y="92" text-anchor="middle">nose</text>
+    <text x="240" y="40" text-anchor="end">left_eye</text>
+    <text x="280" y="40">right_eye</text>
+    <text x="222" y="70" text-anchor="end">left_ear</text>
+    <text x="298" y="70">right_ear</text>
+    <text x="198" y="126" text-anchor="end">left_shoulder</text>
+    <text x="322" y="126">right_shoulder</text>
+    <text x="173" y="204" text-anchor="end">left_elbow</text>
+    <text x="347" y="204">right_elbow</text>
+    <text x="158" y="269" text-anchor="end">left_wrist</text>
+    <text x="362" y="269">right_wrist</text>
+    <text x="218" y="284" text-anchor="end">left_hip</text>
+    <text x="302" y="284">right_hip</text>
+    <text x="210" y="354" text-anchor="end">left_knee</text>
+    <text x="310" y="354">right_knee</text>
+    <text x="206" y="444" text-anchor="end">left_ankle</text>
+    <text x="314" y="444">right_ankle</text>
+  </g>
+</svg>

@@ -1,0 +1,112 @@
+/* ==========================================================
+   Shared styles for all examples
+   ========================================================== */
+
+/* ---------- Font for the labels ----------
+   (the font of the big text is loaded in sketch.js, see FONT_FILE)
+
+   Times New Arial is a variable font concept by
+   Liebermann Kiepe Reddemann produced by Elias Hanzer.
+   https://timesnewarial.liebermannkiepereddemann.de/
+
+   Axes:
+   srff    0 … 100    0 = Arial, 100 = Times
+   ital -100 … 100    -100 = slant left, 0 = upright, 100 = slant right
+*/
+@font-face {
+  font-family: 'Times New Arial';
+  src: url('../fonts/TimesNewArial/TimesNewArialVariable.woff2') format('woff2');
+}
+
+/* ---------- Variables you can change ---------- */
+:root {
+  --bg: #fff;
+  --fg: #000;
+  --type-size: 14vw; /* size of the big text */
+  --ui-size: 14px; /* size of the small labels */
+}
+
+/* ---------- Base ---------- */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: 'Times New Arial', sans-serif;
+  font-size: var(--ui-size);
+  line-height: 1.3;
+  overflow: hidden;
+  touch-action: none; /* stop the page from scrolling on touch */
+}
+
+a {
+  color: inherit;
+}
+
+/* ---------- The variable text ---------- */
+.type {
+  position: fixed;
+  inset: 0;
+  margin: 0;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: var(--type-size);
+  font-weight: normal;
+  line-height: 1;
+  /* font-family and font-variation-settings are set in sketch.js */
+  user-select: none;
+}
+
+/* ---------- Small labels in the four corners ---------- */
+.corner {
+  position: fixed;
+  margin: 0;
+  padding: 1rem;
+  z-index: 1;
+}
+
+.top-left {
+  top: 0;
+  left: 0;
+}
+.top-right {
+  top: 0;
+  right: 0;
+  text-align: right;
+}
+.bottom-left {
+  bottom: 0;
+  left: 0;
+}
+.bottom-right {
+  bottom: 0;
+  right: 0;
+  text-align: right;
+}
+
+/* the live axis values */
+.readout {
+  font-variant-numeric: tabular-nums;
+  white-space: pre;
+}
+
+/* ---------- Camera preview (pose examples) ---------- */
+canvas {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  width: 200px !important;
+  height: auto !important;
+  filter: grayscale(1);
+}
