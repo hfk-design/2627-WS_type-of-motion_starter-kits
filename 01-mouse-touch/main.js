@@ -28,6 +28,6 @@ window.addEventListener('mousemove', (event) => {
   const ital = x * 200 - 100; // -100 … 100
   const srff = y * 100; // 0 … 100
 
-  //   mouseText.style.setProperty('--ital', ital);
-  //   mouseText.style.setProperty('--srff', srff);
+  mouseText.style.setProperty('--ital', ital);
+  mouseText.style.setProperty('--srff', srff);
 });

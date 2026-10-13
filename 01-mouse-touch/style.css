@@ -33,7 +33,7 @@ body {
 
 #animate {
   color: coral;
-  /* animation: pulse 2s infinite; */
+  animation: pulse 2s infinite;
 }
 
 .text {
