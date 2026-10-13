@@ -1,0 +1,84 @@
+/* LOAD FONT
+   Times New Arial is a variable font concept by
+   Liebermann Kiepe Reddemann produced by Elias Hanzer.
+   https://timesnewarial.liebermannkiepereddemann.de/
+
+   Axes:
+   srff    0 … 100    0 = Arial, 100 = Times
+   ital -100 … 100    -100 = slant left, 0 = upright, 100 = slant right
+*/
+
+@font-face {
+  font-family: 'Times New Arial';
+  src: url('fonts/TimesNewArial/TimesNewArialVariable.woff2') format('woff2');
+}
+
+/* BODY STYLING */
+body {
+  /* font */
+  font-family: 'Times New Arial', sans-serif;
+
+  /* color */
+  color: black;
+  background-color: lightgrey;
+  /* size in viewport width (vw) */
+  font-size: 12vw;
+
+  transition: all 0.3s ease-in-out;
+}
+
+/* TEXT STYLING */
+#mouse {
+}
+
+#animate {
+  color: coral;
+  /* animation: pulse 2s infinite; */
+}
+
+.text {
+  /* axis values come from CSS variables (changed in main.js) */
+  --srff: 50;
+  --ital: 0;
+  font-variation-settings:
+    'srff' var(--srff),
+    'ital' var(--ital);
+}
+
+footer {
+  font-size: 1rem;
+  position: fixed;
+  bottom: 0.2rem;
+}
+
+@keyframes pulse {
+  0% {
+    font-variation-settings:
+      'srff' 0,
+      'ital' 100;
+  }
+
+  25% {
+    font-variation-settings:
+      'srff' 50,
+      'ital' -100;
+  }
+
+  50% {
+    font-variation-settings:
+      'srff' 100,
+      'ital' 100;
+  }
+
+  75% {
+    font-variation-settings:
+      'srff' 50,
+      'ital' 0;
+  }
+
+  100% {
+    font-variation-settings:
+      'srff' 0,
+      'ital' 100;
+  }
+}

@@ -1,60 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Variable Font Starter Kit</title>
-    <link rel="stylesheet" href="shared/css/style.css">
-    <style>
-      /* page-specific: a list of links that change on hover */
-      body {
-        overflow: auto;
-        touch-action: auto;
-      }
-      ol {
-        list-style: none;
-        margin: 0;
-        padding: 4rem 1rem;
-        font-size: 9vw;
-        line-height: 1;
-      }
-      ol a {
-        text-decoration: none;
-        font-variation-settings: "srff" 0, "ital" 0;
-        transition: font-variation-settings 0.4s;
-      }
-      ol a:hover,
-      ol a:focus {
-        font-variation-settings: "srff" 100, "ital" 100;
-      }
-      small {
-        font-size: var(--ui-size);
-        vertical-align: top;
-      }
-      .corner {
-        position: static;
-      }
-    </style>
-  </head>
-  <body>
 
-    <p class="corner">Variable Font Starter Kit — Type of Motion</p>
+<!-- META INFO -->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Variable fonts</title>
 
-    <ol>
-      <li><a href="01-mouse-touch/index.html"><small>01</small> Mouse & Touch</a></li>
-      <li><a href="02-body/index.html"><small>02</small> Body</a></li>
-      <li><a href="03-face/index.html"><small>03</small> Face</a></li>
-      <li><a href="04-hand/index.html"><small>04</small> Hand</a></li>
-      <li><a href="05-nose/index.html"><small>05</small> Nose</a></li>
-    </ol>
+  <!-- link CSS styling-->
+  <link rel="stylesheet" href="style.css">
+</head>
 
-    <p class="corner">
-      <a href="https://timesnewarial.liebermannkiepereddemann.de/" target="_blank">Times New Arial</a>
-      is a variable font concept by Liebermann Kiepe Reddemann
-      produced by <a href="https://www.eliashanzer.com" target="_blank">Elias Hanzer</a>.<br>
-      Pose recognition: <a href="https://ml5js.org" target="_blank">ml5.js</a>
-      and <a href="https://p5js.org" target="_blank">p5.js</a>.
-    </p>
+<!-- BODY -->
+<body>
 
-  </body>
+  <!-- text for mouse-interaction -->
+  <div id="mouse" class="text">Type</div>
+
+  <!-- text for animation -->
+  <div id="animate" class="text">of Motion</div>
+
+  <footer>Starterkit for variable fonts. Using <a href="https://timesnewarial.liebermannkiepereddemann.de/"
+      target="_blank" rel="noopener noreferrer">Times New Arial</a>.</footer>
+
+  <!-- link JS -->
+  <script src="main.js"></script>
+</body>
 </html>
