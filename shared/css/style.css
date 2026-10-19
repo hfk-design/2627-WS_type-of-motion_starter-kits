@@ -101,12 +101,13 @@ a {
   white-space: pre;
 }
 
-/* ---------- Camera preview (pose examples) ---------- */
+/* ---------- p5 canvas (pose examples) ----------
+   the canvas is 640 × 480 (like the video),
+   here it is scaled up to fill the window */
 canvas {
   position: fixed;
-  right: 1rem;
-  bottom: 1rem;
-  width: 200px !important;
-  height: auto !important;
-  filter: grayscale(1);
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain;
 }

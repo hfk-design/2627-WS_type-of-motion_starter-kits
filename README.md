@@ -1,117 +1,50 @@
-# Variable Font Starter Kit
+# Type of Motion — Starter Kits
 
-Five small examples of controlling a variable font with your body and devices.
+Six small examples of type that moves with your body.
 
-| Folder           | Input                | → srff (Arial / Times)  | → ital (slant left / right) |
-| ---------------- | -------------------- | ----------------------- | --------------------------- |
-| `01-mouse-touch` | mouse / finger       | move up / down          | move left / right           |
-| `02-body`        | camera, ml5 bodyPose | wrists together / apart | lean left / right           |
-| `03-face`        | camera, ml5 faceMesh | mouth closed / open     | tilt head left / right      |
-| `04-hand`        | camera, ml5 handPose | fingers pinched / open  | hand left / right           |
-| `05-nose`        | camera, ml5 bodyPose | fixed: Times            | fixed: upright              |
+| Folder           | Input                | What happens                                        |
+| ---------------- | -------------------- | --------------------------------------------------- |
+| `01-mouse-touch` | mouse / finger       | a variable font changes its axes                    |
+| `02-body`        | camera, ml5 bodyPose | your shoulders and body build a T from shapes      |
+| `03-face`        | camera, ml5 faceMesh | mouth + eyebrow build an a from a circle and a rect |
+| `04-hand`        | camera, ml5 handPose | thumb–index distance resizes a word                 |
+| `05-nose`        | camera, ml5 bodyPose | your nose draws a track of letters                  |
+| `06-body-trace`  | camera, ml5 bodyPose | dots and lines of your pose leave a trace           |
 
-Every example is one folder with an `index.html` and a `sketch.js`.
+Every example is one folder with an `index.html` and a `sketch.js` (01: `main.js`).
 Start with one, copy the folder, and change it.
 
-## The font
+## Example 01: variable font
 
 [**Times New Arial**](https://timesnewarial.liebermannkiepereddemann.de/) is a variable font
 concept by Liebermann Kiepe Reddemann produced by [Elias Hanzer](https://www.eliashanzer.com).
+See [`01-mouse-touch/README.md`](01-mouse-touch/README.md) for how variable fonts work
+and how to use your own.
 
-It has these axes:
+## Examples 02–06: body tracking + type
 
-| Axis   | Range      | Meaning                                           |
-| ------ | ---------- | ------------------------------------------------- |
-| `srff` | 0 … 100    | 0 = Arial, 100 = Times                            |
-| `ital` | -100 … 100 | -100 = slant left, 0 = upright, 100 = slant right |
-
-> **→ To do:** the font file is not included in this repository, because its
-> license does not allow sharing or public hosting. Upload your own font file to
-> `shared/fonts/` and change `FONT_FILE` in each `sketch.js`
-> (see [Using another variable font](#using-another-variable-font)).
-
-## Using another variable font
-
-Every `sketch.js` starts with the same settings:
-
-```js
-const FONT_FILE = '../shared/fonts/TimesNewArial/TimesNewArialVariable.woff2';
-
-const AXES = [
-  { tag: 'srff', min: 0, max: 100, input: 'x' },
-  { tag: 'ital', min: -100, max: 100, input: 'y' },
-];
-```
-
-1. Put the font file (`.woff2`, `.woff` or `.ttf`) into its own folder in `shared/fonts/`.
-2. Change `FONT_FILE` to the new path.
-3. Find the axes of the font: drop the file onto
-   [wakamaifondue.com](https://wakamaifondue.com) → section _Variable_.
-   It lists every axis with its tag, min and max.
-4. Write one line per axis into `AXES`:
-   - `tag`: the axis name, e.g. `"wght"` (weight), `"wdth"` (width), `"slnt"` (slant)
-   - `min` / `max`: the part of the axis you want to use (swap them to reverse)
-   - `input`: what controls it. Each sketch lists its inputs above `AXES`,
-     e.g. `"x"`, `"pinch"`, `"mouthOpen"`. One input can control several axes.
-
-Every input is a number from 0 to 1. The sketch turns it into
-`min … max` and writes it into `font-variation-settings`.
-Remember to also change the descriptions in `index.html`.
-
-### Web fonts (Adobe Fonts)
-
-Some fonts don't come as a file but as a web font link, for example
-[**Scale Variable**](https://fonts.adobe.com/fonts/scale-variable)
-by Mark Caneso (ps Type) on Adobe Fonts. It has these axes:
-
-| Axis   | Range     | Meaning               |
-| ------ | --------- | --------------------- |
-| `wght` | 200 … 900 | weight: light → black |
-| `wdth` | 50 … 175  | width: narrow → wide  |
-
-1. Add the link to the `<head>` of `index.html`, below the other stylesheet:
-
-   ```html
-   <link rel="stylesheet" href="https://use.typekit.net/ibo6egh.css" />
-   ```
-
-2. In `sketch.js`, set `FONT_FILE` to the font name instead of a file path:
-
-   ```js
-   const FONT_FILE = 'scale-variable';
-
-   const AXES = [
-     { tag: 'wght', min: 200, max: 900, input: 'x' },
-     { tag: 'wdth', min: 50, max: 175, input: 'y' },
-   ];
-   ```
-
-In `05-nose` there is no `AXES`: change `FONT_STYLE` instead,
-e.g. `'"wght" 900, "wdth" 50'`.
-
-If the font doesn't show up, check the web project on
-fonts.adobe.com → _Web Projects_: it must include the font,
-and if domains are listed there, add `localhost` and your web server.
-
-## How every sketch is structured
+Every `sketch.js` is short and has the same parts:
 
 ```
-SETTINGS   → what you can change: text, font file, AXES, smoothing …
-SETUP      → find the HTML elements, load the font, start camera / model
-INPUT      → read the movement and turn it into numbers from 0 to 1
-OUTPUT     → updateAxes() turns the inputs into axis values
-HELPERS    → small functions you don't need to change
+SETTINGS   → what you can change: word, font, colours, thickness …
+SETUP      → start the camera and the model
+DRAW       → runs ~60 times per second: find the points, draw the type
 ```
+
+The canvas is 640 × 480 pixels, the same size as the video,
+so the points from ml5 can be used directly to draw.
+CSS scales the canvas up to fill the window.
 
 Things to try:
 
-- change `TEXT`
-- connect an axis to a different input
-- swap `min` and `max` of an axis to reverse the direction
-- change `SMOOTHING` (0.02 = slow and soft, 1 = instant)
-- change the numbers in the INPUT section to make it more / less sensitive
-- add your own input, e.g. `inputs.elbow = map(...)`, and use it in `AXES`
-- change the size or colours at the top of `shared/css/style.css`
+- change the settings at the top of `sketch.js`
+- use other points, e.g. `pose.left_elbow` instead of `pose.left_wrist`
+- **02:** add a circle on the head, build a different letter (an `L`? an `X` from both arms?)
+- **03:** pick other face points from the [face mesh map](https://github.com/tensorflow/tfjs-models/blob/master/face-landmarks-detection/mesh_map.jpg), build an `o`, `b` or `d`
+- **04:** use the distance for something else: `rotate()`, the colour, the number of letters
+- **05:** draw with your wrist (`PEN_POINT = "right_wrist"`), draw a whole word,
+  or add `background(255, 10)` at the start of `draw()` so the track slowly fades
+- **06:** draw only some points (just the wrists?), or a letter on every point
 
 ## How pose recognition works
 
@@ -125,8 +58,8 @@ Things to try:
    bodyPose finds 17 points on the body (see image),
    handPose 21 per hand, faceMesh 468 on the face.
 4. **Your code:** you measure something with these points (a distance,
-   a height, an angle), turn it into a number from 0 to 1 and connect it
-   to a font axis.
+   a height, an angle) or use them directly, and connect it
+   to the type: a position, a size, a line.
 
 Everything runs in your browser. The video is not uploaded anywhere.
 
@@ -155,13 +88,14 @@ In VS Code: install the extension _Live Server_,
 right-click `index.html` → _Open with Live Server_.
 It opens at <http://localhost:5500>.
 
-The browser will ask for camera access in examples 02–05.
+The browser will ask for camera access in examples 02–06.
+Loading the model takes a few seconds before anything appears.
 `localhost` counts as secure, so the camera works on your laptop.
 
 ## Libraries
 
-- [p5.js](https://p5js.org) 1.11.1 — camera and drawing (examples 02–05)
-- [ml5.js](https://ml5js.org) 1.2.1 — pose recognition (examples 02–05)
+- [p5.js](https://p5js.org) 1.11.1 — camera and drawing (examples 02–06)
+- [ml5.js](https://ml5js.org) 1.2.1 — pose recognition (examples 02–06)
   - [bodyPose](https://docs.ml5js.org/#/reference/bodypose)
   - [faceMesh](https://docs.ml5js.org/#/reference/facemesh)
   - [handPose](https://docs.ml5js.org/#/reference/handpose)
