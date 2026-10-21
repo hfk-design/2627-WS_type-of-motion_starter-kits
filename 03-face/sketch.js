@@ -35,12 +35,10 @@ let video;
 let faceMesh;
 let faces = [];  // ml5 fills this with every face it finds
 
-// preload runs before setup: load the model
-function preload() {
-  faceMesh = ml5.faceMesh({ maxFaces: 1, flipped: true });
-}
+// async setup: "await" waits until the model is loaded
+async function setup() {
+  faceMesh = await ml5.faceMesh({ maxFaces: 1, flipped: true });
 
-function setup() {
   createCanvas(640, 480);  // same size as the video, CSS scales it to the window
   video = createCapture(VIDEO, { flipped: true });  // flipped = mirror view
   video.size(640, 480);

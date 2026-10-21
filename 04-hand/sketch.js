@@ -26,12 +26,10 @@ let video;
 let handPose;
 let hands = [];  // ml5 fills this with every hand it finds
 
-// preload runs before setup: load the model
-function preload() {
-  handPose = ml5.handPose({ maxHands: 1, flipped: true });
-}
+// async setup: "await" waits until the model is loaded
+async function setup() {
+  handPose = await ml5.handPose({ maxHands: 1, flipped: true });
 
-function setup() {
   createCanvas(640, 480);  // same size as the video, CSS scales it to the window
   video = createCapture(VIDEO, { flipped: true });  // flipped = mirror view
   video.size(640, 480);

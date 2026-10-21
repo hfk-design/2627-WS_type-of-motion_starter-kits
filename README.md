@@ -94,8 +94,8 @@ Loading the model takes a few seconds before anything appears.
 
 ## Libraries
 
-- [p5.js](https://p5js.org) 1.11.1 — camera and drawing (examples 02–06)
-- [ml5.js](https://ml5js.org) 1.2.1 — pose recognition (examples 02–06)
+- [p5.js](https://p5js.org) 2.3.4 — camera and drawing (examples 02–06)
+- [ml5.js](https://ml5js.org) 1.4.0 — pose recognition (examples 02–06)
   - [bodyPose](https://docs.ml5js.org/#/reference/bodypose)
   - [faceMesh](https://docs.ml5js.org/#/reference/facemesh)
   - [handPose](https://docs.ml5js.org/#/reference/handpose)

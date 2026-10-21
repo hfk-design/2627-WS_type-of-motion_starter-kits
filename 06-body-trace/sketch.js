@@ -29,19 +29,17 @@ let bodyPose;
 let poses = [];      // ml5 fills this with every body it finds
 let connections;     // which points are connected by a line
 
-// preload runs before setup: load the model
-function preload() {
-  bodyPose = ml5.bodyPose("MoveNet", { flipped: true });
-}
+// async setup: "await" waits until the model is loaded
+async function setup() {
+  bodyPose = await ml5.bodyPose("MoveNet", { flipped: true });
 
-function setup() {
   createCanvas(640, 480);  // same size as the video, CSS scales it to the window
   video = createCapture(VIDEO, { flipped: true });  // flipped = mirror view
   video.size(640, 480);
   video.hide();
 
   // pairs of point numbers, e.g. [5, 7] = left shoulder → left elbow
-  connections = bodyPose.getSkeleton();
+  connections = bodyPose.getConnections();
 
   // start detecting, gotPoses is called with the results
   bodyPose.detectStart(video, gotPoses);
